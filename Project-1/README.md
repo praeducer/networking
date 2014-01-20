@@ -84,9 +84,9 @@ if any difference is found, your output will be considered wrong.
 
 Your software will NOT be tested on the example traces. To make sure your software works as required on other traces, you can generate them on your own by running, for example
 
-# tcpdump -tt -i eth3 -p -n -nn -v icmp or tcp
++ tcpdump -tt -i eth3 -p -n -nn -v icmp or tcp
 
-# traceroute -T -p 80 -n www.cern.ch
++ traceroute -T -p 80 -n www.cern.ch
 
 but make sure to use the following versions of traceroute and tcpdump (e.g., on Ubuntu 10.10) 
 
