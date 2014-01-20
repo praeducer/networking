@@ -1,4 +1,3 @@
-
 CSCI 4760 - Computer Networks
 ==============================
 
@@ -6,7 +5,6 @@ Spring 2012
 
 
 Instructor	Prof. Roberto Perdisci
-Credits	4
 Prerequisites	Programming Languages: Java, Familiarity with Linux
 
 Course Overview:
