@@ -1,9 +1,10 @@
 Project 2: HTTP download using "Range"
 =======================================
-Type of Project: Only Individual
-Deadline: 2012-02-16, 11:59pm
-Language: Java
-Points: Max 20 points
+
++ Type of Project: Only Individual
++ Deadline: 2012-02-16, 11:59pm
++ Language: Java
++ Points: Max 20 points
 
 Submission Guidelines:
 -----------------------
