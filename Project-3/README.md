@@ -9,18 +9,12 @@ Submission Guidelines: Submit through nike.cs.uga.edu, as usual (course dir cs47
 
 Example structure:
 Perdisci_Roberto-udp_reliable_transfer
-|
-+--- Protocol.txt
-|
-+--- README
-|
-+--- UrftClient.java
-|
-+--- UrftProtocol.java (class for common code)
-|
-+--- UrftServer.java
-|
-+--- ... (other .java files) 
++ Protocol.txt
++ README
++ UrftClient.java
++ UrftProtocol.java (class for common code)
++ UrftServer.java
++ ... (other .java files) 
 
 NOTE: project submissions that do not follow the guidelines risk to be discarded without consideration (i.e., 0 points).
 
@@ -38,30 +32,37 @@ To test your code we will create two directories: "client_dir" and "server_dir".
 
 To simulate packet loss, we will test your software using a "transparent proxy" [amd64, i386]. The transparent proxy will probabilistically drop a packet. 
 An example of how we will run your code is reported below:
-### This assumes that you have compiled your submission directory with
-### $ javac *
-### and that the client_dir and server_dir directories exist. 
+> This assumes that you have compiled your submission directory with
+> $ javac *
+> and that the client_dir and server_dir directories exist. 
 
-### [ Terminal 1 ]
+> [ Terminal 1 ]
 
-### Destination directory
+> Destination directory
+
 $ cd server_dir
 
-### java -cp .. UrftServer <server port>
+> java -cp .. UrftServer <server port>
+
 $ java -cp .. UrftServer 20000
 
-### [ Terminal 2 ]
+> [ Terminal 2 ]
 
-### urft-proxy <loss probability> <proxy port> <server ip> <server port>
+> urft-proxy <loss probability> <proxy port> <server ip> <server port>
+
 $ ./urft-proxy 0.10 10000 127.0.0.1 20000
 
-### [ Terminal 3 ]
+> [ Terminal 3 ]
 
-### Source directory
+> Source directory
+
 $ cd client_dir
 
-### urft-client <proxy ip> <proxy port> <file name>
+> urft-client <proxy ip> <proxy port> <file name>
+
 $ java -cp .. UrftClient 127.0.0.1 10000 test_file1
+
+
 In this example, the file "test_file1" will be split into datagrams and sent to the server, which will store it in the "server_dir" directory. You can then compare the md5sum of "client_dir/test_file1" and "server_dir/test_file1" to make sure they match!
 
 
