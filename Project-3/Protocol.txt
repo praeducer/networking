@@ -1,0 +1,34 @@
+/**
+ * File name: Protocol.txt
+ * Author: Paul Prae
+ * Last Edited: March 23rd, 2012
+ * Title: Project 3 
+ * Course: CSCI 4760 Spring 2012
+ * Professor: Professor Roberto Perdisci
+*/
+
+This program client and server pair was heavily influenced by http://en.wikipedia.org/wiki/User_Datagram_Protocol and RFC 768 (http://tools.ietf.org/html/rfc768)
+
+The main values of the overall protocol are:
+
+	//FIELDS
+	//Constants
+	public static final String NAMEOFSAVEFILE = "test";
+	public static final short HEADERSIZE = 16;
+	public static final short DATAGRAMSIZE = (100 + HEADERSIZE);
+	public static final short DATASIZE = (DATAGRAMSIZE - HEADERSIZE);
+	public static final short TIMEOUT = 500;
+	public static final short PROTOCOL = 17;
+
+The header is formatted as follows:
+
+	The DatagramPacket object, which will contain the rest of the header information and the data, will take care of: entire length of UDP protocol via getLength() and it will get the IP or Port of the machine to which it is sent or received via getAddress() or getPort() respectively. The rest of the header information will be included in the the first 16 bytes of the DatagramPacket object's data where byte[0]-[1] is the protocol number , [2]-[5] is total file size, [6]-[7] is the checksum, [8]-[11] is the sequence number, and [12]-[15] is the ACK number and byte [16]- [DATAGRAMSIZE-1] will be the current file content (all byte addresses listed here are inclusive). Checksum is not implemented in this version.
+
+Client behavior:
+
+	The client will send its first packet to the destination provided by the user. The packet will contain a header segment and a data segment. The data segment will be DATASIZE bytes. The client will keep a file pointer that will always point to the next byte to be sent. This file pointer will be set as the sequence number for the header before the data is added to the packet. This will indicate the sequence number as the first byte of data in the packet as it relates to the overall byte count of the file. After the first packet is sent, new packets will only be sent once the last packet is ACK'd. Then the client will send the next packet starting with the byte that is indicated by the ACK number it received from the server. The client will set the file pointer to the ACK number that is received and send the data starting from there. This ACK number will then become the sequence number for the next packet header to be sent. The client will stop sending data once the file pointer reaches the end of the file and all data has been ACK'd.
+	The timeouts will be handled by the setSoTimeOut method in the DatagramSocket. This will happen as the client is waiting for an ACK. The client will wait for the timeout until a SocketTimeoutException is thrown. This will be handled and a recursive resend operation will be executed.
+
+Server behavior:
+
+	The server must be started in order to receive packets. It will wait for the first or next in order packet to be received. Once it receives a packet it makes sure the sequence number in the packet header is equivalent to the local file pointer stored in the server object. The server will only accept new packets that it has not already received and that are consecutive from the last packet received and stored. All other packets will be ignored. If the desired in order packet is received, the server will use the file pointer, which indicates the next byte to store in the local file, as the ACK number. This will tell the client what it is expecting and what it wants next. If the server receives an out of order packet, it will simply resend the last ACK and header. This will tell the client the packet the server is looking for. The server will stop receiving data once the file pointer has reached the total file size. Then file will then be saved.
